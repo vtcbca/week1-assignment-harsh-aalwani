@@ -1,0 +1,69 @@
+-Create database
+sqlite3 sms.db
+
+-Create table
+
+1. STUDENT TABLE
+CREATE TABLE student
+(
+id PRIMARY KEY,
+name
+);
+
+2. STUDENT DETAIL TABLE
+CREATE TABLE stud_detail
+(
+sid,
+city,
+mob_no,
+FOREIGN KEY (sid)  
+REFERENCES student(id)  
+);
+
+-INSERTING RECORDS
+
+INSERT INTO student
+VALUES(1,'Harsh'),(2,'Vatsal'),(3,'Jay'),(4,'Vishual'),(5,'Meet');
+
+INSERT INTO stud_detail
+VALUES(1,'Bardoli',7999000999),(2,'Surat',8889990008),(3,'Surat',7778887779),(4,'Bardoli',9098887772),(5,'Surat',9998880007);
+
+QUERIES:
+
+1.Display all records.
+
+SELECT s.id, s.name, sd.city, sd.mob_no FROM student s INNER JOIN stud_detail sd ON s.id = sd.sid;
+OUTPUT:
+
+┌────┬─────────┬─────────┬────────────┐
+│ id │  name   │  city   │   mob_no   │
+├────┼─────────┼─────────┼────────────┤
+│ 1  │ Harsh   │ Bardoli │ 7999000999 │
+│ 2  │ Vatsal  │ Surat   │ 8889990008 │
+│ 3  │ Jay     │ Surat   │ 7778887779 │
+│ 4  │ Vishual │ Bardoli │ 9098887772 │
+│ 5  │ Meet    │ Surat   │ 9998880007 │
+└────┴─────────┴─────────┴────────────┘
+
+2.Display students coming from 'Surat'.
+
+SELECT s.id, s.name, sd.city, sd.mob_no FROM student s INNER JOIN stud_detail sd ON s.id = sd.sid WHERE sd.city LIKE 'Surat';
+OUTPUT:
+┌────┬────────┬───────┬────────────┐
+│ id │  name  │ city  │   mob_no   │
+├────┼────────┼───────┼────────────┤
+│ 2  │ Vatsal │ Surat │ 8889990008 │
+│ 3  │ Jay    │ Surat │ 7778887779 │
+│ 5  │ Meet   │ Surat │ 9998880007 │
+└────┴────────┴───────┴────────────┘
+
+3.Display students city starting with 'B'.
+
+SELECT s.id, s.name, sd.city, sd.mob_no FROM student s INNER JOIN stud_detail sd ON s.id = sd.sid WHERE sd.city LIKE 'B%';
+OUTPUT:
+┌────┬─────────┬─────────┬────────────┐
+│ id │  name   │  city   │   mob_no   │
+├────┼─────────┼─────────┼────────────┤
+│ 1  │ Harsh   │ Bardoli │ 7999000999 │
+│ 4  │ Vishual │ Bardoli │ 9098887772 │
+└────┴─────────┴─────────┴────────────┘
